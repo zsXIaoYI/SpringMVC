@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!-- 组件扫描，扫描Service -->
+    <context:component-scan base-package="com.springapp.mvc.service.impl"/>
+
+    <!-- 配置自定义的时间任务(Job) -->
+    <bean id="myJob1" class="cn.zsza.task.MyTaskOne" />
+
+    <!-- 配置方法调用任务工厂2(XXXJobDetailFactoryBean) -->
+    <bean id="myJobDetail1"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="myJob1"/>
+        </property>
+        <property name="targetMethod">
+            <value>print</value>
+        </property>
+    </bean>
+    <bean id="myJobTrigger1"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail"  ref="myJobDetail1"/>
+        <property name="cronExpression">
+            <!--
+              0 0/1 * * * ?   0/2 * * * * ?
+            -->
+            <value>0/2 * * * * ?</value>
+        </property>
+    </bean>
+
+
+    <!-- 配置调度器工厂(SchedulerFactoryBean) -->
+    <bean name="SpringJobSchedulerFactoryBean"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="myJobTrigger1"/>-->
+            </list>
+        </property>
+    </bean>
+</beans>
