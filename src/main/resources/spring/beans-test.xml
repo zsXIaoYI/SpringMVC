@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+       <!--
+         scope默认为singleton
+         scope为prototype时，多例
+       -->
+       <bean id="car" class="cn.zsza.dailyTest.spring4.Car"
+             p:brand="宝马x3"
+             p:color="黄色"
+             p:maxSpeed="200" scope="prototype"/>
+
+
+
+
+</beans>
