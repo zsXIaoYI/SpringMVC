@@ -1,12 +1,17 @@
 package cn.zsza.dailyTest.controller;
 
+import cn.zsza.dailyTest.spring4.Car;
 import cn.zsza.domain.User;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 
 /**
@@ -17,6 +22,14 @@ import java.io.UnsupportedEncodingException;
 @Controller
 @RequestMapping("/param")
 public class ParamController {
+
+    @javax.annotation.Resource(name = "carr")
+    private Car car;
+
+    @javax.annotation.Resource
+    private List<Car> carList;
+
+
     @RequestMapping("tt")
     @ResponseBody
     public String resResult(){
@@ -84,6 +97,44 @@ public class ParamController {
 
         return "Hello," + str;
     }
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getUrl")
+    @ResponseBody
+    public String getUrl() throws IOException {
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource res = resolver.getResource("classpath:spring/beans-test.xml");
+
+        return res.getURL().toString();
+    }
+
+    /**
+     * 注解的方式配置Car
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getCar")
+    @ResponseBody
+    public String testCar() throws IOException {
+
+        return car.toString();
+    }
+
+    /**
+     * 注解配置一个carList
+     * @return
+     */
+    @RequestMapping("getCarList")
+    @ResponseBody
+    public List<Car> getCarList(){
+
+        return carList;
+    }
+
 
 
 
