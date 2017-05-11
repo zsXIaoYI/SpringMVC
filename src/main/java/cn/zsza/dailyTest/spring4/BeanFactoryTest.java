@@ -12,6 +12,10 @@ import java.io.IOException;
  * Created by zs on 2017/5/5.
  * 15:22
  */
+
+/**
+ *
+ */
 public class BeanFactoryTest {
 
     public static void main(String[] args) throws IOException {
@@ -19,9 +23,6 @@ public class BeanFactoryTest {
 
         Resource res = resolver.getResource("classpath:spring/beans-test.xml");
         System.out.println(res.getURL());  // 返回file:/D:/WorkSpace_new/IDEA/SpringMVC/target/classes/spring/beans-test.xml
-
-        DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
-
 
         /**
          * XmlBeanDefinitionReader通过Resource装载Spring配置信息并启动IoC容器，然后就可以通过BeanFactory#getBean(beanName)
@@ -31,13 +32,17 @@ public class BeanFactoryTest {
          *
          * Spring在DefaultSingletonBeanRegistry类中提供了一个用于缓存但实例Bean的缓存器，它是一个用HashMap实现的缓存器，单实例的
          * Bean以beanName为键保存在这个HashMap中
+         *
+         * 
          */
+        DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
 
         reader.loadBeanDefinitions(res);
 
-        Car car1 = factory.getBean("car",Car.class);
-        Car car2 = factory.getBean("car",Car.class);
+        System.out.println("bean size=" + factory.getBeanDefinitionCount());
+        Car car1 = factory.getBean("car1",Car.class);
+        Car car2 = factory.getBean("car2",Car.class);
 
         System.out.println(car1 == car2);
         System.out.println(car2.toString());
