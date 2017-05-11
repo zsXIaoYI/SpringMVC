@@ -24,7 +24,7 @@ public class BeanDefinition {
       return car;
     }
 
-    @Bean
+    @Bean(name = "carList")
     public List<Car> carList(){
         List<Car> carList = new ArrayList<>();
         Car car1 = new Car();
