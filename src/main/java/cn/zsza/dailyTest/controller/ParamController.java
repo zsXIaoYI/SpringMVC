@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -134,6 +137,21 @@ public class ParamController {
 
         return carList;
     }
+
+    /**
+     * 获取ServletContext对象
+     * @return
+     */
+
+    @RequestMapping("getSerT")
+    @ResponseBody
+    public String getTestServletContext(){
+        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+        ServletContext servletContext = webApplicationContext.getServletContext();
+        System.out.println(servletContext);
+        return "success";
+    }
+
 
 
 
