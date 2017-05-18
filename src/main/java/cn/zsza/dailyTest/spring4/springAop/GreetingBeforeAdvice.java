@@ -1,4 +1,4 @@
-package cn.zsza.dailyTest.spring4.aop;
+package cn.zsza.dailyTest.spring4.springAop;
 
 import org.springframework.aop.MethodBeforeAdvice;
 

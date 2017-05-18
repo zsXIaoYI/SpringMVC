@@ -1,10 +1,10 @@
-package cn.zsza.dailyTest.spring4.aop;
+package cn.zsza.dailyTest.spring4.springAop;
 
 /**
  * Created by zs on 2017/5/18.
  * 11:29
  */
-public class NaiveWaiter implements Waiter {
+public class NaiveWaiter implements Waiter,Waitress {
 
 
 
@@ -19,7 +19,17 @@ public class NaiveWaiter implements Waiter {
     }
 
     @Override
+    public String say(String mes) {
+        return mes;
+    }
+
+    @Override
     public String toString() {
         return "NaiveWaiter{}";
+    }
+
+    @Override
+    public void printSex(String sex) {
+        System.out.println("I am " + sex);
     }
 }

@@ -1,4 +1,4 @@
-package cn.zsza.dailyTest.spring4.aop;
+package cn.zsza.dailyTest.spring4.springAop;
 
 /**
  * Created by zs on 2017/5/18.
@@ -7,4 +7,6 @@ package cn.zsza.dailyTest.spring4.aop;
 public interface Waiter {
     void greetTo(String name);
     void serveTo(String name);
+
+    public String say(String mes);
 }

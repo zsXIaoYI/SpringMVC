@@ -1,4 +1,4 @@
-package cn.zsza.dailyTest.spring4.aop;
+package cn.zsza.dailyTest.spring4.springAop;
 
 /**
  * Created by zs on 2017/5/18.
