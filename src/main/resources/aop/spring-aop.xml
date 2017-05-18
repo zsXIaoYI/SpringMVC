@@ -5,13 +5,20 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="greetingAdvice" class="cn.zsza.dailyTest.spring4.aop.GreetingBeforeAdvice"/>
+       <!--前置增强-->
+       <bean id="greetingBefore" class="cn.zsza.dailyTest.spring4.aop.GreetingBeforeAdvice"/>
+       <!--后置增强-->
+       <bean id="greetingAfter" class="cn.zsza.dailyTest.spring4.aop.GreetingAfterAdvice"/>
+
        <bean id="target" class="cn.zsza.dailyTest.spring4.aop.NaiveWaiter"/>
 
-       <!--下面两种方式配置都可以-->
+       <!--
+         下面两种方式配置都可以,对于proxyInterfaces和interceptorNames两个属性,在存在多个时,用逗号分隔
+       -->
        <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
+
              p:proxyInterfaces="cn.zsza.dailyTest.spring4.aop.Waiter,cn.zsza.dailyTest.spring4.aop.Waitress"
-             p:interceptorNames="greetingAdvice"
+             p:interceptorNames="greetingBefore,greetingAfter"
              p:target-ref="target"
        />
 
