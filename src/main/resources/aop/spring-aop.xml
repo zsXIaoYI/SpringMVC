@@ -6,18 +6,18 @@
          http://www.springframework.org/schema/beans/spring-beans.xsd">
 
        <!--前置增强-->
-       <bean id="greetingBefore" class="cn.zsza.dailyTest.spring4.aop.GreetingBeforeAdvice"/>
+       <bean id="greetingBefore" class="cn.zsza.dailyTest.spring4.springAop.GreetingBeforeAdvice"/>
        <!--后置增强-->
-       <bean id="greetingAfter" class="cn.zsza.dailyTest.spring4.aop.GreetingAfterAdvice"/>
-
-       <bean id="target" class="cn.zsza.dailyTest.spring4.aop.NaiveWaiter"/>
+       <bean id="greetingAfter" class="cn.zsza.dailyTest.spring4.springAop.GreetingAfterAdvice"/>
+       <!--目标类-->
+       <bean id="target" class="cn.zsza.dailyTest.spring4.springAop.NaiveWaiter"/>
 
        <!--
          下面两种方式配置都可以,对于proxyInterfaces和interceptorNames两个属性,在存在多个时,用逗号分隔
        -->
        <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
 
-             p:proxyInterfaces="cn.zsza.dailyTest.spring4.aop.Waiter,cn.zsza.dailyTest.spring4.aop.Waitress"
+             p:proxyInterfaces="cn.zsza.dailyTest.spring4.springAop.Waiter,cn.zsza.dailyTest.spring4.springAop.Waitress"
              p:interceptorNames="greetingBefore,greetingAfter"
              p:target-ref="target"
        />
