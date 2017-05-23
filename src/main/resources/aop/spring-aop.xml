@@ -9,30 +9,24 @@
        <bean id="greetingBefore" class="cn.zsza.dailyTest.spring4.springAop.GreetingBeforeAdvice"/>
        <!--后置增强-->
        <bean id="greetingAfter" class="cn.zsza.dailyTest.spring4.springAop.GreetingAfterAdvice"/>
+       <!--环绕增强-->
+       <bean id="greetingAround" class="cn.zsza.dailyTest.spring4.springAop.GreetingInterceptor"/>
        <!--目标类-->
        <bean id="target" class="cn.zsza.dailyTest.spring4.springAop.NaiveWaiter"/>
 
        <!--
          下面两种方式配置都可以,对于proxyInterfaces和interceptorNames两个属性,在存在多个时,用逗号分隔
+         bean的属性proxyTargetClass,false,表示用jdk代理;true,表示用CgLib代理
        -->
        <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
 
              p:proxyInterfaces="cn.zsza.dailyTest.spring4.springAop.Waiter,cn.zsza.dailyTest.spring4.springAop.Waitress"
-             p:interceptorNames="greetingBefore,greetingAfter"
+             p:interceptorNames="greetingAround"
              p:target-ref="target"
        />
 
 
-       <!--<bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean">-->
-              <!--<property name="proxyInterfaces">-->
-                     <!--<list>-->
-                            <!--<value>cn.zsza.dailyTest.spring4.aop.Waiter</value>-->
-                            <!--<value>cn.zsza.dailyTest.spring4.aop.Waitress</value>-->
-                     <!--</list>-->
-              <!--</property>-->
-           <!--<property name="interceptorNames" value="greetingAdvice"/>-->
-           <!--<property name="target" ref="target"/>-->
-       <!--</bean>-->
+
 
 
 </beans>
