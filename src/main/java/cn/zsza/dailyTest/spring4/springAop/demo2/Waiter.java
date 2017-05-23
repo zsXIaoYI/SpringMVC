@@ -9,7 +9,7 @@ public class Waiter {
         System.out.println("waiter greet to " + name + "..." );
     }
 
-    public void serveTo(String name) {
+    public void serverTo(String name) {
         System.out.println("waiter server to " + name + "..." );
 
     }
