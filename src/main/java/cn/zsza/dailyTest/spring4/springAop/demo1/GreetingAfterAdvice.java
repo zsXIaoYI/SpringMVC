@@ -1,4 +1,4 @@
-package cn.zsza.dailyTest.spring4.springAop;
+package cn.zsza.dailyTest.spring4.springAop.demo1;
 
 import org.springframework.aop.AfterReturningAdvice;
 

@@ -1,5 +1,10 @@
 package cn.zsza.dailyTest.spring4.springAop;
 
+import cn.zsza.dailyTest.spring4.springAop.demo1.GreetingBeforeAdvice;
+import cn.zsza.dailyTest.spring4.springAop.demo1.NaiveWaiter;
+import cn.zsza.dailyTest.spring4.springAop.demo1.Waiter;
+import cn.zsza.dailyTest.spring4.springAop.demo1.Waitress;
+import cn.zsza.dailyTest.spring4.springAop.demo2.Seller;
 import org.junit.Test;
 import org.springframework.aop.BeforeAdvice;
 import org.springframework.aop.framework.ProxyFactory;
@@ -11,6 +16,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 11:31
  */
 public class AopTest {
+    private String configPath = "aop/spring-aop.xml";
+    private ApplicationContext ctx = new ClassPathXmlApplicationContext(configPath);
+
     @Test
     public void before(){
         Waiter target = new NaiveWaiter();
@@ -42,8 +50,6 @@ public class AopTest {
     }
     @Test
     public void testBeforeAdviceByXml(){
-        String configPath = "aop/spring-aop.xml";
-        ApplicationContext ctx = new ClassPathXmlApplicationContext(configPath);
         Waiter waiter = (Waiter) ctx.getBean("waiter");
         waiter.greetTo("Tom");
 
@@ -52,12 +58,38 @@ public class AopTest {
 
         System.out.println(waiter == waitress);
     }
+
+    /**
+     * 后置增强
+     */
     @Test
     public void testAfterAdvice(){
-        String configPath = "aop/spring-aop.xml";
-        ApplicationContext ctx = new ClassPathXmlApplicationContext(configPath);
         Waiter waiter = (Waiter) ctx.getBean("waiter");
         waiter.say("I work in Beijing");
     }
+
+    /**
+     * 环绕增强
+     */
+    @Test
+    public void testAround(){
+        Waitress waitress = (Waitress) ctx.getBean("waiter");
+        waitress.printSex("male");
+    }
+    /**......................spring-aop2.xml.............................*/
+
+    @Test
+    public void testAdvisor(){
+        String configPath = "aop/spring-aop2.xml";
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(configPath);
+
+        cn.zsza.dailyTest.spring4.springAop.demo2.Waiter waiter =
+                (cn.zsza.dailyTest.spring4.springAop.demo2.Waiter) ctx.getBean("waiter");
+        Seller seller = (Seller) ctx.getBean("seller");
+        waiter.greetTo("Tom");
+        seller.greetTo("John");
+    }
+
+
 
 }
