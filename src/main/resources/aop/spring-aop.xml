@@ -16,13 +16,16 @@
 
        <!--
          下面两种方式配置都可以,对于proxyInterfaces和interceptorNames两个属性,在存在多个时,用逗号分隔
-         bean的属性proxyTargetClass,false,表示用jdk代理;true,表示用CgLib代理
+         bean的属性proxyTargetClass:是否对类进行代理(而不是对接口进行代理).当设置为true时,使用CGLib动态代理
+         将其设置为true后,无须再设置proxyInterfaces属性,即使设置也会被ProxyFactoryBean忽略
        -->
        <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean"
 
              p:proxyInterfaces="cn.zsza.dailyTest.spring4.springAop.demo1.Waiter,cn.zsza.dailyTest.spring4.springAop.demo1.Waitress"
-             p:interceptorNames="greetingAround"
+             p:interceptorNames="greetingBefore"
              p:target-ref="target"
+             p:proxyTargetClass="true"
+
        />
 
 
