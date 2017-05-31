@@ -1,5 +1,6 @@
 package cn.zsza.dailyTest.spring4.springAop;
 
+import cn.zsza.dailyTest.spring4.springAop.aspectJ.PreGreetingAspect;
 import cn.zsza.dailyTest.spring4.springAop.demo1.GreetingBeforeAdvice;
 import cn.zsza.dailyTest.spring4.springAop.demo1.NaiveWaiter;
 import cn.zsza.dailyTest.spring4.springAop.demo1.Waiter;
@@ -7,10 +8,10 @@ import cn.zsza.dailyTest.spring4.springAop.demo1.Waitress;
 import cn.zsza.dailyTest.spring4.springAop.demo2.Seller;
 import org.junit.Test;
 import org.springframework.aop.BeforeAdvice;
+import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 /**
  * Created by zs on 2017/5/18.
  * 11:31
@@ -25,6 +26,7 @@ public class AopTest {
         BeforeAdvice advice = new GreetingBeforeAdvice();
         /**
          * Spring提供的代理工厂
+         * ProxyFactory内部就是使用JDK或CGLib动态代理技术将增强应用到目标类中的
          */
         ProxyFactory pf = new ProxyFactory();
         /**
@@ -87,9 +89,46 @@ public class AopTest {
                 (cn.zsza.dailyTest.spring4.springAop.demo2.Waiter) ctx.getBean("waiter");
         Seller seller = (Seller) ctx.getBean("seller");
         waiter.greetTo("Tom");
+        waiter.serverTo("Mack");
+
         seller.greetTo("John");
     }
+    @Test
+    public void testRegexAdvisor(){
+        String configPath = "aop/spring-aop2.xml";
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(configPath);
+        cn.zsza.dailyTest.spring4.springAop.demo2.Waiter waiter =
+                (cn.zsza.dailyTest.spring4.springAop.demo2.Waiter) ctx.getBean("waiterRegex");
+
+        waiter.greetTo("Jack");
+
+    }
+
+    /**......................使用AspectJ.............................*/
+    @Test
+    public void testAspectJ(){
+        cn.zsza.dailyTest.spring4.springAop.aspectJ.Waiter target = new cn.zsza.dailyTest.spring4.springAop.aspectJ.NaiveWaiter();
 
 
+        AspectJProxyFactory factory = new AspectJProxyFactory();
+
+        factory.setTarget(target);
+
+        factory.addAspect(PreGreetingAspect.class);
+
+        cn.zsza.dailyTest.spring4.springAop.aspectJ.Waiter waiter = factory.getProxy();
+
+        waiter.greetTo("Tom");
+    }
+    @Test
+    public void testAspectJByXml(){
+        String configPath = "aop/spring-aspectJ.xml";
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(configPath);
+
+        cn.zsza.dailyTest.spring4.springAop.aspectJ.Waiter waiter =
+                (cn.zsza.dailyTest.spring4.springAop.aspectJ.Waiter) ctx.getBean("waiter");
+
+        waiter.greetTo("Jack");
+    }
 
 }
