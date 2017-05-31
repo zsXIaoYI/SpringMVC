@@ -13,7 +13,7 @@
        <bean id="greetingAdvice" class="cn.zsza.dailyTest.spring4.springAop.demo2.GreetingBeforeAdvice"/>
 
        <!--
-         advice-ref:向切面诸如一个前置增强
+         advice-ref:向切面注入一个前置增强
        -->
        <bean id="greetingAdvisor" class="cn.zsza.dailyTest.spring4.springAop.demo2.GreetingAdvisor"
              p:advice-ref="greetingAdvice"
