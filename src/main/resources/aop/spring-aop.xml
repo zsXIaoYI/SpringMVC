@@ -27,9 +27,4 @@
              p:proxyTargetClass="true"
 
        />
-
-
-
-
-
 </beans>
