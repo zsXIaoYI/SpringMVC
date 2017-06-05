@@ -131,4 +131,18 @@ public class AopTest {
         waiter.greetTo("Jack");
     }
 
+    @Test
+    public void testMyInterceptor(){
+        String configPath = "aop/spring-aspectJ.xml";
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(configPath);
+
+        cn.zsza.dailyTest.spring4.springAop.aspectJ.Waiter waiter =
+                (cn.zsza.dailyTest.spring4.springAop.aspectJ.Waiter) ctx.getBean("waiter");
+
+        waiter.greetTo("Michelle");
+        waiter.introduce("小白",18);
+
+
+    }
+
 }
