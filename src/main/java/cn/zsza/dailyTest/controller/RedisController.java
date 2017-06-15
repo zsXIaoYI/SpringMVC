@@ -58,4 +58,18 @@ public class RedisController {
         System.out.println("............." + expire.longValue());
         return "success";
     }
+
+    /**
+     * 获取锁
+     * @param key
+     * @param value
+     * @return
+     */
+    @RequestMapping("lock")
+    @ResponseBody
+    public String lock(String key,String value){
+        boolean lock = redisUtil.lock(key, value);
+        System.out.println("lock:" + lock);
+        return "success";
+    }
 }
