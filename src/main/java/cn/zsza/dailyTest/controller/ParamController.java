@@ -171,6 +171,7 @@ public class ParamController {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
+
         System.out.println("......" + Thread.currentThread().getName());
         HttpServletRequest request = SpringMvcUtils.getRequest();
         System.out.println("request:" + request);
