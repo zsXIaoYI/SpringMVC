@@ -1,5 +1,6 @@
 package cn.zsza.dailyTest.controller;
 
+import cn.zsza.common.util.SpringMvcUtils;
 import cn.zsza.dailyTest.spring4.Car;
 import cn.zsza.domain.User;
 import org.springframework.core.io.Resource;
@@ -12,11 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-
-
 /**
  * Created by ZhangSong on 2016/9/26.
  * 21:07
@@ -31,6 +31,7 @@ public class ParamController {
 
     @javax.annotation.Resource
     private List<Car> carList;
+
 
 
     @RequestMapping("tt")
@@ -151,6 +152,33 @@ public class ParamController {
         System.out.println(servletContext);
         return "success";
     }
+
+    /**
+     * 打印ClassPath
+     * @return
+     */
+    @RequestMapping("getCph")
+    @ResponseBody
+    public String getClassPath(){
+        return this.getClass().getClassLoader().getResource("").toString();
+    }
+
+    @RequestMapping("getRq")
+    @ResponseBody
+    public String getRequest(){
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        System.out.println("......" + Thread.currentThread().getName());
+        HttpServletRequest request = SpringMvcUtils.getRequest();
+        System.out.println("request:" + request);
+        String name = request.getParameter("name");
+        System.out.println("name:" + name);
+        return "{\"status\":\"success\"}";
+    }
+
 
 
 
