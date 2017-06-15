@@ -12,7 +12,10 @@
 
        <bean id="waiter" class="cn.zsza.dailyTest.spring4.springAop.aspectJ.NaiveWaiter"/>
 
-       <bean class="cn.zsza.dailyTest.spring4.springAop.aspectJ.PreGreetingAspect"/>
+       <!--<bean class="cn.zsza.dailyTest.spring4.springAop.aspectJ.PreGreetingAspect"/>-->
 
+
+       <!--MyInterceptor-->
+       <bean id="myInterceptor" class="cn.zsza.dailyTest.spring4.springAop.Interceptor.MyInterceptor"/>
 
 </beans>
