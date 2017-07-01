@@ -8,10 +8,15 @@
          scope默认为singleton
          scope为prototype时，多例
        -->
-       <bean id="car" class="cn.zsza.dailyTest.spring4.Car"
+       <bean id="car1" class="cn.zsza.dailyTest.spring4.Car"
              p:brand="宝马x3"
              p:color="黄色"
-             p:maxSpeed="200" scope="prototype"/>
+             p:maxSpeed="200"/>
+
+       <bean id="car2" class="cn.zsza.dailyTest.spring4.Car"
+             p:brand="宝马x3"
+             p:color="黄色"
+             p:maxSpeed="200"/>
 
 
 
