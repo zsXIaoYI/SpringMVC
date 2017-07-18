@@ -8,5 +8,14 @@
     -->
     <typeAliases>
         <typeAlias type="cn.zsza.domain.User" alias="user"/>
+
+        <typeAlias type="cn.zsza.activity.entity.ActivityUserDetailEntity"
+                   alias="activityUserDetail"/>
+
+        <typeAlias type="cn.zsza.activity.entity.UserRouletteLogEntity"
+                   alias="userRouletteLog"/>
     </typeAliases>
+
+
+
 </configuration>
