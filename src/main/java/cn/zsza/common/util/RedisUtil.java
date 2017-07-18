@@ -16,14 +16,14 @@ public class RedisUtil {
     private final long DEFAULT_LOCK_TIMEOUNT = 10000l;
     private static final Logger log = LoggerFactory.getLogger(RedisUtil.class);
 
-//    @Autowired
+    @Autowired
     private Pool<Jedis> redisPool;
 
     public synchronized Jedis getJedis() {
         Jedis jedis = null;
         try {
             jedis = redisPool.getResource();
-            System.out.println(jedis.dbSize() + "..........");
+//            System.out.println(jedis.dbSize() + "..........");
         } catch (Exception e) {
             log.error("获取jedis异常:" + e.getMessage() );
         }
@@ -87,5 +87,55 @@ public class RedisUtil {
             if (jedis != null)
                 jedis.close();
         }
+    }
+
+    /**
+     * 获取锁
+     * @param lockKey
+     * @param lockValue
+     * @return
+     */
+    public boolean lock(String lockKey,String lockValue){
+        boolean result=false;
+        try(Jedis resource = redisPool.getResource()){
+            String set = resource.set(lockKey, lockValue, "NX", "PX", DEFAULT_LOCK_TIMEOUNT);
+            result = "OK".equals(set);
+        }catch (Exception e){
+
+        }
+        return result;
+    }
+
+    /**
+     * 释放锁
+     * @param lockKey
+     * @param lockValue
+     * @return
+     */
+    public boolean unlock(String lockKey,String lockValue ){
+        boolean result=false;
+        String value=null;
+        try(Jedis resource = redisPool.getResource()){
+            value = resource.get(lockKey);
+            if(null==value){
+                result= true;
+            }else {
+                if (lockValue.equals(value)) {
+                    result = resource.del(lockKey) > 0l;
+                } else {
+                    result = true;
+                }
+            }
+        }catch (Exception e){
+        }
+        return result;
+    }
+
+    public long increment(String key) {
+        Jedis jedis = getJedis();
+        long n = jedis.incr(key);
+        if (jedis != null)
+            jedis.close();
+        return n;
     }
 }
