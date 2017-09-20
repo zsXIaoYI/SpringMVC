@@ -4,8 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.util.Pool;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by ZhangSong on 2016/12/23.
@@ -129,6 +134,85 @@ public class RedisUtil {
         }catch (Exception e){
         }
         return result;
+    }
+
+    /**
+     * 存放Map
+     * @param key
+     * @param map
+     * @param expireTime
+     * @return
+     */
+
+    public boolean setMap(String key, Map<String, String> map, int expireTime) {
+        Jedis jedis = getJedis();
+        try {
+            String result = jedis.hmset(key, map);
+            if (!StringUtils.isEmpty(result) && result.equalsIgnoreCase("OK")) {
+                jedis.expire(key, expireTime);
+                return true;
+            } else {
+                return false;
+            }
+        } finally {
+            jedis.close();
+        }
+    }
+    public String getMapKey(String key, String field) {
+        Jedis jedis = getJedis();
+        try {
+            String result = jedis.hget(key, field);
+            if (!StringUtils.isEmpty(result) && result.equalsIgnoreCase("nil")) {
+                return null;
+            } else {
+                return result;
+            }
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
+     * 获取所有的可以对应的value，其结果集封装成一个list
+     * @param key
+     * @param field
+     * @return
+     */
+    public List<String> getMapVal(String key, String... field) {
+        Jedis jedis = getJedis();
+        try {
+            return jedis.hmget(key, field);
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
+     * 获得所有的key
+     * @param key
+     * @return
+     */
+    public Set<String> getMapKeys(String key) {
+        Jedis jedis = getJedis();
+        try {
+            return jedis.hkeys(key);
+        } finally {
+            jedis.close();
+        }
+    }
+
+    /**
+     * 获取所有value
+     * @param key
+     * @return
+     */
+    public List<String> getMapVals(String key) {
+        Jedis jedis = getJedis();
+        try {
+            return jedis.hvals(key);
+        } finally {
+            jedis.close();
+        }
     }
 
     public long increment(String key) {
