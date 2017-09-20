@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ZhangSong on 2017/4/2.
@@ -21,8 +23,15 @@ public class RedisController {
     @RequestMapping("set")
     @ResponseBody
     public String setKeyAndValue(String key,String value){
-        redisUtil.set(key,value);
+        String str = redisUtil.set(key, value);
+        System.out.println("res=" + str);
         return "success";
+    }
+    @RequestMapping("get")
+    @ResponseBody
+    public String getByKey(String key){
+        String str = redisUtil.get(key);
+        return str;
     }
     @RequestMapping("setAndTime")
     @ResponseBody
@@ -72,4 +81,17 @@ public class RedisController {
         System.out.println("lock:" + lock);
         return "success";
     }
+
+
+    @RequestMapping("setMap")
+    @ResponseBody
+    public String setMap(){
+        Map<String,String> map = new HashMap<>();
+        map.put("sina","sina.com");
+        map.put("baidu","baidu.com");
+        boolean result = redisUtil.setMap("webSite",map,10);
+        System.out.println("result:" + result);
+        return "success";
+    }
+
 }
