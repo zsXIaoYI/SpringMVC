@@ -29,6 +29,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -37,6 +38,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20.1</version>
                 <configuration>
                     <!--在执行package时，忽略测试用例-->
                     <skipTests>true</skipTests>
@@ -97,7 +99,7 @@
             </resource>
 
             <resource>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
                 <directory>src/main/resources</directory>
                 <!--resources目录下的所用.txt将不会打包到classes目录下
                 <excludes>
