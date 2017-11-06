@@ -7,15 +7,13 @@
     <version>1.0-SNAPSHOT</version>
     <name>SpringMVC</name>
 
-
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.1.6.RELEASE</spring.version>
         <quartz.version>2.2.1</quartz.version>
         <jackson.version>2.4.3</jackson.version>
         <guava.version>18.0</guava.version>
-
+        <!--自定义属性-->
         <my.name>zsza5466</my.name>
     </properties>
 
