@@ -16,7 +16,6 @@ public class AjaxController {
     @ResponseBody
     public String getValue(String name){
         int i = 1;
-        System.out.println("执行............");
         if (i % 2 == 1){
             i++;
             return "success";
